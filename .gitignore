@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+**/.env
+
+# Build output
+dist/
+build/
+
+# Frontend specific
+frontend/build/
+frontend/.env.local
+
+# Backend specific
+backend/users.db
+backend/.env
+
+# Miscellaneous
+.DS_Store
+
+# IDE specific
+.vscode/
+.idea/
