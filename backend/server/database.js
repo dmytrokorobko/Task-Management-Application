@@ -1,7 +1,10 @@
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
-const db = new sqlite3.Database('./users.db', (err) => {
+const dbName = process.env.DB_NAME;
+
+const db = new sqlite3.Database('./' + dbName, (err) => {
    if (err) {
       console.error('Database opening error: ', err.message);
    } else {
@@ -10,35 +13,54 @@ const db = new sqlite3.Database('./users.db', (err) => {
 });
 
 const saltRound = 10;
+const adminName = process.env.ADMIN_USERNAME;
+const adminPass = process.env.ADMIN_PASSWORD;
+const adminRole = process.env.ADMIN_ROLE;
+const userRole = process.env.USER_ROLE;
 
 db.serialize(() => {
+   //users table
    db.run(`
       CREATE TABLE IF NOT EXISTS users (
          id INTEGER PRIMARY KEY AUTOINCREMENT,
          username TEXT UNIQUE NOT NULL,
          password TEXT NOT NULL,
-         role TEXT NOT NULL DEFAULT "user"         
+         role TEXT NOT NULL DEFAULT ${userRole},
+         blocked INTEGER DEFAULT 0
+      );      
+   `);
+
+   //tasks table
+   db.run(`
+      CREATE TABLE IF NOT EXISTS tasks (
+         id INTEGER PRIMARY KEY AUTOINCREMENT,         
+         title TEXT NOT NULL,
+         description TEXT,
+         expiration TEXT,
+         completed INTEGER DEFAULT 0,
+         user_id INTEGER NOT NULL,
+         FOREIGN KEY (user_id) REFERENCES users(id)
       );      
    `);
 
    //check admin user in database
-   const q1 = db.prepare('SELECT * FROM users WHERE role="admin"');
-   q1.get(async (err, row) => {
-      if (err) return console.log('Error retrieving data from database');
+   const checkAdmin = db.prepare('SELECT * FROM users WHERE role=?');
+   checkAdmin.get(adminRole, async (err, row) => {
+      checkAdmin.finalize();
+      if (err) return console.log('Error retrieving data from database: ', err.message);
       if (!row) {                  
-         bcrypt.hash('admin1', saltRound, (err, hashPassword) => {
-            if (err) console.log('Bad hash ' + err.message);         
+         bcrypt.hash(adminPass, saltRound, (err, hashPassword) => {
+            if (err) console.log('Bad hash: ' + err.message);         
       
-            const q2 = db.prepare('INSERT INTO users (username, password, role) VALUES (?, ?, ?)');
-            q2.run('admin', hashPassword, 'admin', function (err) {
-               if (err) return console.log(err.message);      
-               console.log('Admin user registered successfully');
+            const newAdmin = db.prepare('INSERT INTO users (username, password, role, blocked) VALUES (?, ?, ?, ?)');
+            newAdmin.run(adminName, hashPassword, adminRole, 0, function (err) {
+               newAdmin.finalize();
+               if (err) return console.log("Error inserting data to database: ", err.message);      
+               console.log('Admin registered successfully');
             });
-            q2.finalize();
          })
       }
    });
-   q1.finalize();
 });
 
 module.exports = db;
