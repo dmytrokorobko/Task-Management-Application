@@ -1,0 +1,4 @@
+.App section {
+   display: flex;
+   flex-grow: 1;
+ }
