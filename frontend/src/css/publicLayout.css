@@ -1,4 +1,59 @@
 .App section {
    display: flex;
    flex-grow: 1;
+   flex-direction: column;
+ }
+
+ .header {
+  display: flex;
+  padding: 20px 0;
+  align-items: center;  
+ }
+
+ .header img {
+  width: auto;
+  height: 75px;
+  border-radius: 15px;
+ }
+
+ .header nav ul {
+  display: flex;
+  list-style: none;
+  column-gap: 20px;
+ }
+
+ .header nav ul li a {
+  padding: 10px;
+  border: 1px solid #D3D5D7;
+  transition: all .3s linear;
+ }
+
+ .header nav ul li a:hover, 
+ .header nav ul li a.active:hover {
+  color: #0075F2;
+  border: 1px solid #0075F2;
+  text-decoration: none;
+ }
+
+ .header nav ul li a.active {
+  color: #76B041;
+  border: 1px solid #76B041;
+ }
+
+ .home {
+  
+ }
+
+ .page404 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+ }
+
+ .page404 img {
+  width: 300px;
+  display: block;
+  margin: 20px auto;
+
  }

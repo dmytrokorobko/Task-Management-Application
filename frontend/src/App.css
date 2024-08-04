@@ -1,8 +1,11 @@
-/* --flame: #e4572eff;
---platinum: #d3d5d7ff;
---blue-crayola: #0075f2ff;
---raisin-black: #2e282aff;
---kelly-green: #76b041ff; */
+/*  background: #2E282A
+    text: #D3D5D7
+    active: #0075F2
+    success: #76B041
+    fail: #E4572E
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Hind+Madurai:wght@300;400;500;600;700&family=Poly:ital@0;1&display=swap');
 
 .App {
   text-align: center;
@@ -14,4 +17,16 @@
   justify-content: flex-start;
   font-size: 16px;
   color: #D3D5D7;
+}
+
+header {
+  font-size: 22px;
+}
+
+a {
+  color: #D3D5D7;
+}
+
+a:hover {
+  color: #0075F2;
 }

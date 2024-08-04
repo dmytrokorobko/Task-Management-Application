@@ -5,7 +5,7 @@ import '../App.css';
 export const BaseLayout = ({HeaderComponent}) => {
    return (
       <div className="App">
-         <header className="App-header">           
+         <header>
             <HeaderComponent />
          </header>
          <section>

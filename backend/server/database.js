@@ -1,10 +1,10 @@
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const dbName = process.env.DB_NAME;
-
-const db = new sqlite3.Database('./' + dbName, (err) => {
+const db = new sqlite3.Database(path.resolve(__dirname, '../' + dbName), (err) => {
    if (err) {
       console.error('Database opening error: ', err.message);
    } else {
