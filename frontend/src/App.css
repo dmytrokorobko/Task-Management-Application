@@ -1,11 +1,18 @@
-/*  background: #2E282A
+/*  COLORS
+    background: #2E282A
+    dark-background: #201e1f
     text: #D3D5D7
     active: #0075F2
     success: #76B041
     fail: #E4572E
+
+    FONTS
+    Heebo
+    Hind Madurai
+    Poly
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Hind+Madurai:wght@300;400;500;600;700&family=Poly:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Poly:ital@0;1&display=swap');
 
 .App {
   text-align: center;
@@ -17,16 +24,43 @@
   justify-content: flex-start;
   font-size: 16px;
   color: #D3D5D7;
+  font-family: 'Heebo', sans-serif;    
 }
 
 header {
   font-size: 22px;
+  display: flex;
+  justify-content: center;
 }
 
-a {
+header, footer {
+  width: 100%;
+  background-color: #201e1f;
+  font-family: 'Poly', serif;
+}
+
+header, section, footer {
+  margin: 0 20px;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+a {  
   color: #D3D5D7;
 }
 
 a:hover {
   color: #0075F2;
+}
+
+p.server-error {
+  color: #E4572E;
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+p.server-error::before, p.server-error::after {
+  content: "***";
 }
