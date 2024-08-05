@@ -5,17 +5,17 @@ import { loginThunk } from "./thunks/auth/loginThunk";
 const authSlice = createSlice({
    name: 'auth',
    initialState: {
-      username: '',
-      role: '',
-      token: '',
+      username: null,
+      role: null,
+      token: null,
       loading: false,
       error: null
    },
    reducers: {
       logout: (state) => {
-         state.username = '';
-         state.role = '';
-         state.token = '';
+         state.username = null;
+         state.role = null;
+         state.token = null;
       }
    },
    extraReducers: builder => {

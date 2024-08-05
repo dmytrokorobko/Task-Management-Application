@@ -1,7 +1,7 @@
 export const Task = () => {
    return (
       <div>
-         <h1>Task</h1>
+         <h1>All Task</h1>
       </div>
    )
 }

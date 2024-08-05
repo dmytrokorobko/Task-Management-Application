@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { logout } from "../../authSlice";
 
 export const logoutThunk = createAsyncThunk(
    'auth/logoutThunk',
-   async(_, {rejectWithValue}) => {
-      try {
-         
-      } catch(err) {
-
-      }
+   async({navigate}, {dispatch}) => {
+      console.log('start logout');
+      await dispatch(logout());
+      console.log('logout passed');
+      navigate('/');
+      console.log('redirect');
    }
 )

@@ -11,7 +11,7 @@ import { store } from './store/store';
 import { Tasks } from './pages/private/Tasks';
 import { PrivateLayout } from './layouts/PrivateLayout';
 import PrivateRoute from './routes/PrivateRoute';
-import { Pending } from './pages/private/pending';
+import { Pending } from './pages/private/Pending';
 import { Completed } from './pages/private/Completed';
 import { NewTask } from './pages/private/NewTask';
 import { AdminLayout } from './layouts/AdminLayout';
@@ -27,8 +27,8 @@ function App() {
           <Route path="/" element={<PublicLayout />}>
               <Route index element={<Home />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/logout" element={<Logout />} />              
+              <Route path="/login" element={<Login />} />  
+              <Route path="/logout" element={<Logout />} />            
               <Route path="*" element={<Page404 />} />
           </Route>
           <Route path='/' element={<PrivateLayout />}>
@@ -37,7 +37,7 @@ function App() {
               <Route path='/pending' element={<Pending />} />
               <Route path='/completed' element={<Completed />} />
               <Route path='/newtask' element={<NewTask />} />
-              <Route path='/task/:id' element={<Task />} />
+              <Route path='/task/:id' element={<Task />} />              
             </Route>            
           </Route>
           <Route path='/' element={<AdminLayout />}>
