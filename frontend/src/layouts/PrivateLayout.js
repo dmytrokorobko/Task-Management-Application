@@ -2,7 +2,7 @@ import { HeaderPrivate } from "../components/HeaderPrivate";
 import { BaseLayout } from "./BaseLayout";
 import { useEffect } from 'react';
 
-export const PublicLayout = () => {
+export const PrivateLayout = () => {
    useEffect(() => {
       import('../css/privateLayout.css');
    }, []);
