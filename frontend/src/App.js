@@ -8,6 +8,7 @@ import { Logout } from './pages/public/Logout';
 import { Page404 } from './pages/public/Page404';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { Tasks } from './pages/private/Tasks';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/tasks" element={<Tasks />} />
               <Route path="*" element={<Page404 />} />
           </Route>
         </Routes>

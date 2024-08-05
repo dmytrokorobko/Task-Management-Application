@@ -10,7 +10,8 @@
   align-items: center;  
   flex-wrap: wrap;
   justify-content: center;
-  row-gap: 20px;
+  gap: 20px;
+  column-gap: 40px;
  }
 
  .header img {

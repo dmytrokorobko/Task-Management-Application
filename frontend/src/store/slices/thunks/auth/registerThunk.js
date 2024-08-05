@@ -13,7 +13,7 @@ export const registerThunk = createAsyncThunk(
       } catch(err) {
          if (err.response && err.response.data) return rejectWithValue(err.response.data.message);
          else if (err.message) return rejectWithValue(err.message);
-         else rejectWithValue('Unexpected error occured');
+         else return rejectWithValue('Unexpected error occured');
       }
    }
 )
