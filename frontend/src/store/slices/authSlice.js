@@ -5,7 +5,7 @@ import { loginThunk } from "./thunks/auth/loginThunk";
 const authSlice = createSlice({
    name: 'auth',
    initialState: {
-      username: null,
+      user: null,
       role: null,
       token: null,
       loading: false,
@@ -13,7 +13,7 @@ const authSlice = createSlice({
    },
    reducers: {
       logout: (state) => {
-         state.username = null;
+         state.user = null;
          state.role = null;
          state.token = null;
       }

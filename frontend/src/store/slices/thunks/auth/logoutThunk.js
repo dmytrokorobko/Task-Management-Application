@@ -4,10 +4,7 @@ import { logout } from "../../authSlice";
 export const logoutThunk = createAsyncThunk(
    'auth/logoutThunk',
    async({navigate}, {dispatch}) => {
-      console.log('start logout');
       await dispatch(logout());
-      console.log('logout passed');
       navigate('/');
-      console.log('redirect');
    }
 )

@@ -18,6 +18,29 @@ import { AdminLayout } from './layouts/AdminLayout';
 import { Users } from './pages/admin/Users';
 import { User } from './pages/admin/User';
 import { Task } from './pages/private/Task';
+import { ActiveUsers } from './pages/admin/ActiveUsers';
+import { BlockedUsers } from './pages/admin/BlockedUsers';
+
+const renderPrivateRoutes = (allowedRoles, LayoutComponent) => (
+  <Route element={<PrivateRoute allowedRoles={allowedRoles} />}>
+    <Route element={<LayoutComponent />}>
+      <Route path='/tasks' element={<Tasks />} />
+      <Route path='/pending' element={<Pending />} />
+      <Route path='/completed' element={<Completed />} />
+      <Route path='/newtask' element={<NewTask />} />
+      <Route path='/task/:id' element={<Task />} />    
+
+      {allowedRoles.includes('admin') && (
+        <>
+          <Route path='/users' element={<Users />} />
+          <Route path='/users/active' element={<ActiveUsers />} />
+          <Route path='/users/blocked' element={<BlockedUsers />} />
+          <Route path='/user/:id' element={<User />} />
+        </>
+      )}
+    </Route>
+  </Route>
+)
 
 function App() {
   return (
@@ -31,21 +54,22 @@ function App() {
               <Route path="/logout" element={<Logout />} />            
               <Route path="*" element={<Page404 />} />
           </Route>
-          <Route path='/' element={<PrivateLayout />}>
-            <Route path='/' element={<PrivateRoute allowedRoles={['admin', 'user']} />}>
-              <Route path='/tasks' element={<Tasks />} />
-              <Route path='/pending' element={<Pending />} />
-              <Route path='/completed' element={<Completed />} />
-              <Route path='/newtask' element={<NewTask />} />
-              <Route path='/task/:id' element={<Task />} />              
-            </Route>            
+
+          <Route element={<PrivateRoute allowedRoles={['user', 'admin']} />}>
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/pending" element={<Pending />} />
+            <Route path="/completed" element={<Completed />} />
+            <Route path="/newtask" element={<NewTask />} />
+            <Route path="/task/:id" element={<Task />} />
           </Route>
-          <Route path='/' element={<AdminLayout />}>
-            <Route path='/' element={<PrivateRoute allowedRoles={['admin']} />}>
-              <Route path='/users' element={<Users />} />
-              <Route path='/user/:id' element={<User />} />
-            </Route>
+
+          <Route element={<PrivateRoute allowedRoles={['admin']} />}>
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/active" element={<ActiveUsers />} />
+            <Route path="/users/blocked" element={<BlockedUsers />} />
+            <Route path="/user/:id" element={<User />} />
           </Route>
+          
         </Routes>
       </BrowserRouter>
     </Provider>

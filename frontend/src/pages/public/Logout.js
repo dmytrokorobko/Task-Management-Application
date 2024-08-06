@@ -8,7 +8,7 @@ export const Logout = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      dispatch(logoutThunk(navigate));
+      dispatch(logoutThunk({navigate}));
    }, [dispatch, navigate]);
 
    return null;
