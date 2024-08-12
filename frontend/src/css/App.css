@@ -20,7 +20,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-start;
   font-size: 16px;
   color: #D3D5D7;
@@ -34,13 +33,12 @@ header {
 }
 
 header, footer {
-  width: 100%;
   background-color: #201e1f;
   font-family: 'Poly', serif;
 }
 
 header, section, footer {
-  margin: 0 20px;
+  padding: 0 20px;
 }
 
 h1 {
@@ -55,7 +53,7 @@ a:hover {
   color: #0075F2;
 }
 
-p.server-error {
+p.server-error, p.server-success {
   color: #E4572E;
   font-weight: 700;
   margin: 20px 0;
@@ -63,4 +61,8 @@ p.server-error {
 
 p.server-error::before, p.server-error::after {
   content: "***";
+}
+
+p.server-success {
+  color: #76B041;
 }

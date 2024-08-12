@@ -3,13 +3,13 @@ const db = require('./database');
 
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-const secretKey = process.env.SECRET_KEY;
+const secretKey = 'mySecretKey'; //process.env.SECRET_KEY;
 
-const authenticateToken = (req, res, next) => {
-   const authHeader = req.headers['authorization'];
+const authenticateToken = (req, res, next) => {   
+   const authHeader = req.headers['authorization'];   
    if (!authHeader) return res.status(401).send({message: 'Authorization was not provided'});
    const token = authHeader.split(' ')[1];
-   jwt.verify(token.split(' ')[1], secretKey, (err, decoded) => {
+   jwt.verify(token, secretKey, (err, decoded) => {
       if (err) return res.status(401).send({message: 'Failed to authenticate token: ' + err.message});      
       req.user = decoded;
       next();

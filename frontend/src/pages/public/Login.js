@@ -62,7 +62,9 @@ export const Login = () => {
                      <ErrorMessage className='error' name='password' component='div' />
                   </div>
                   {authError && <p className='server-error'>{authError}</p>}
-                  <button type='submit' disabled={isSubmitting}>Login</button>
+                  <div className="button">
+                     <button type="submit" disabled={isSubmitting}>Login</button>
+                  </div>
                </form>
             )}
          </Formik>

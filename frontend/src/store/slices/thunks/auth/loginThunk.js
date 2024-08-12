@@ -9,7 +9,7 @@ export const loginThunk = createAsyncThunk(
       try {
          const response = await axios.post(server + '/login', {username, password});
          const {token, role} = response.data;
-         navigate(from, {replace: true});
+         navigate(from, {replace: true});         
          return {username: username, role, token};
       } catch (err) {
          if (err.response && err.response.data.message) return rejectWithValue(err.response.data.message); 

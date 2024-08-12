@@ -9,38 +9,15 @@ import { Page404 } from './pages/public/Page404';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { Tasks } from './pages/private/Tasks';
-import { PrivateLayout } from './layouts/PrivateLayout';
 import PrivateRoute from './routes/PrivateRoute';
 import { Pending } from './pages/private/Pending';
 import { Completed } from './pages/private/Completed';
 import { NewTask } from './pages/private/NewTask';
-import { AdminLayout } from './layouts/AdminLayout';
 import { Users } from './pages/admin/Users';
 import { User } from './pages/admin/User';
 import { Task } from './pages/private/Task';
 import { ActiveUsers } from './pages/admin/ActiveUsers';
 import { BlockedUsers } from './pages/admin/BlockedUsers';
-
-const renderPrivateRoutes = (allowedRoles, LayoutComponent) => (
-  <Route element={<PrivateRoute allowedRoles={allowedRoles} />}>
-    <Route element={<LayoutComponent />}>
-      <Route path='/tasks' element={<Tasks />} />
-      <Route path='/pending' element={<Pending />} />
-      <Route path='/completed' element={<Completed />} />
-      <Route path='/newtask' element={<NewTask />} />
-      <Route path='/task/:id' element={<Task />} />    
-
-      {allowedRoles.includes('admin') && (
-        <>
-          <Route path='/users' element={<Users />} />
-          <Route path='/users/active' element={<ActiveUsers />} />
-          <Route path='/users/blocked' element={<BlockedUsers />} />
-          <Route path='/user/:id' element={<User />} />
-        </>
-      )}
-    </Route>
-  </Route>
-)
 
 function App() {
   return (

@@ -72,8 +72,11 @@ app.get('/tasks', authenticateToken, getUserId, (req, res) => {
 //create new task for current user
 app.post('/newtask', authenticateToken, getUserId, (req, res) => {
    const {title, description, expiration} = req.body;
-   const taskQuery = db.prepare('INSERT INTO tasks (title, description, expiration, completed, user_id) VALUES (?, ?, ?, ?, ?');
-   taskQuery.run(title, description, expiration, 0, userRow.id, function (err) {
+   console.log('Title: ' + title);
+   console.log('UserId: ' + req.userId);
+   if (title.length === 0) return res.status(500).send({message: 'Title is empty'});
+   const taskQuery = db.prepare('INSERT INTO tasks (title, description, expiration, completed, user_id) VALUES (?, ?, ?, ?, ?)');
+   taskQuery.run(title, description, expiration, completed = 0, req.userId, function (err) {
       taskQuery.finalize();
       if (err) return res.status(500).send({message: 'Error creating task: ' + err.message});
       res.status(200).send({taskId: this.lastID, message: 'New task was created successfully'});

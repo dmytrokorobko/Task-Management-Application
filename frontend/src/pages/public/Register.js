@@ -27,7 +27,7 @@ export const Register = () => {
                password2: ''
             }}
             validationSchema={Yup.object().shape({
-               username: Yup.string().min(5, 'Too short').required('Required field'),
+               username: Yup.string().min(3, 'Too short').required('Required field'),
                password: Yup.string().min(5, 'Too short').required('Required field'),
                password2: Yup.string().oneOf([Yup.ref('password'), null], errPassword2).required('Required field'),
             })}
@@ -64,7 +64,9 @@ export const Register = () => {
                      <ErrorMessage className='error' name='password2' component='div' />
                   </div>
                   {authError && <p className='server-error'>{authError}</p>}
-                  <button type='submit' disabled={isSubmitting}>Register</button>
+                  <div className="button">
+                     <button type="submit" disabled={isSubmitting}>Register</button>
+                  </div>                  
                </form>
             )}
          </Formik>
