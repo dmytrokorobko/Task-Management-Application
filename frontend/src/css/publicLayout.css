@@ -95,6 +95,16 @@
   width: 600px;  
  }
 
+ @media screen and (max-width:650px ) {
+  .form form {
+    width: 100%;
+  }
+
+  section .form form div div label {  
+    width: 75px;
+   }
+ }
+
  .form form div {
   display: flex;
   flex-direction: column;  

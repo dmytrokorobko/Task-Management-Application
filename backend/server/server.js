@@ -97,9 +97,9 @@ app.get('/task/:id', authenticateToken, getUserId, (req, res) => {
 });
 
 //update selected task for current user
-app.put('/task/:id', authenticateToken, getUserId, (req, res) => {   
+app.put('/task/:id', authenticateToken, getUserId, (req, res) => {      
    const { id } = req.params;   
-   const {title, description, expiration, completed} = req.body;
+   const {title, description, expiration, completed} = req.body;   
    if (!title || !description || !expiration || completed === undefined) {
       return res.status(400).send({ message: 'Title, description, expiration, and completed status are required' });
    }

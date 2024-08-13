@@ -48,50 +48,62 @@
    border-bottom: none;
 }
 
-.task-item {
+.task-item div {
    display: flex;
    justify-content: space-between;
+   flex-wrap: wrap;
    gap: 10px;
    align-items: center;   
 }
 
-.task-item p:nth-child(1) {
+.task-item div p:nth-child(1) {
    width: 200px;
    text-align: left;
 }
 
-.task-item p:nth-child(2) {
+.task-item div p:nth-child(2) {
    flex-grow: 1;
 }
 
-.task-item p:nth-child(3) {
+.task-item div p:nth-child(3) {
    width: 100px;
 }
 
-.task-item .task-completed {
+.task-item div .task-completed {
    display: flex;
    align-items: center;
+   cursor: copy;
 }
 
-.task-item .task-completed input {
+.task-item div .task-completed input {
    width: 20px;
    height: 20px;
 }
 
-.task-item .task-buttons {
+.task-item div .task-buttons {
    display: flex;
    gap: 10px;
 }
 
-.task-item .task-buttons button {
+.task-item div .task-buttons button {
    padding: 5px 10px;
    cursor: pointer;
 }
 
-.task-item .task-buttons button.task-button-edit {
+.task-item div .task-buttons button.task-button-edit {
    background-color: #76B041;
 }
 
-.task-item .task-buttons button.task-button-delete {
+.task-item div .task-buttons button.task-button-delete {
    background-color: #E4572E;
 }
+
+.task-item p.server-error,
+.task-item p.server-loading {
+   margin: 0 0 10px;
+}
+
+.server-loading {
+   color: #0075F2;
+}
+

@@ -1,6 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { newTaskThunk } from './thunks/tasks/newTaskThunk';
 import { tasksThunk } from './thunks/tasks/tasksThunk';
+import { toggleTaskThunk } from './thunks/tasks/toggleTaskThunk';
+import { deleteTaskThunk } from './thunks/tasks/deleteTaskThunk';
 
 const tasksSlice = createSlice({
    name: 'tasks',
@@ -46,6 +48,35 @@ const tasksSlice = createSlice({
             state.success = true;
          })         
          .addCase(newTaskThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+         })         
+         //toggle Completed task
+         .addCase(toggleTaskThunk.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = false;
+         })
+         .addCase(toggleTaskThunk.fulfilled, (state, action) => {
+            state.loading = false;   
+            state.success = true;  
+         })         
+         .addCase(toggleTaskThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+         })  
+         //delete selected task
+         .addCase(deleteTaskThunk.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+            state.success = false;
+         })
+         .addCase(deleteTaskThunk.fulfilled, (state, action) => {
+            state.loading = false;     
+            state.success = true;                
+            state.tasks = state.tasks.filter(task => task.id !== action.meta.arg.task.id);
+         })         
+         .addCase(deleteTaskThunk.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
          })         

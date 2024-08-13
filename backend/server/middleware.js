@@ -6,7 +6,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const secretKey = 'mySecretKey'; //process.env.SECRET_KEY;
 
 const authenticateToken = (req, res, next) => {   
-   const authHeader = req.headers['authorization'];   
+   const authHeader = req.headers['authorization'];  
    if (!authHeader) return res.status(401).send({message: 'Authorization was not provided'});
    const token = authHeader.split(' ')[1];
    jwt.verify(token, secretKey, (err, decoded) => {

@@ -3,18 +3,16 @@ import axios from "axios";
 
 const server = process.env.REACT_APP_BACKEND_API;
 
-export const toggleTaskThunk = createAsyncThunk(
-   'tasks/toggleTaskThunk',
+export const deleteTaskThunk = createAsyncThunk(
+   'tasks/deleteTaskThunk',
    async({task, navigate}, thunkAPI) => {
       const state = thunkAPI.getState();
       const token = state.auth.token;
       if (!token) return navigate('/login'); 
       const {rejectWithValue} = thunkAPI;
-      try {
+      try {         
          const url = server + '/task/' + task.id;
-         const response = await axios.put(url, {
-            ...task
-         }, {
+         const response = await axios.delete(url, {
             headers: {
                'Authorization': `Bearer ${token}`
             }
@@ -23,7 +21,7 @@ export const toggleTaskThunk = createAsyncThunk(
       } catch(err) {
          if (err.response && err.response.data.message) return rejectWithValue(err.response.data.message);
          else if (err.message) return rejectWithValue(err.message);
-         else return rejectWithValue('Unexpected error occured')
+         else return rejectWithValue('Unexpected error occured');
       }
    }
 )
