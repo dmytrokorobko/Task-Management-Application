@@ -3,18 +3,16 @@ import axios from "axios";
 
 const server = process.env.REACT_APP_BACKEND_API;
 
-export const toggleTaskThunk = createAsyncThunk(
-   'tasks/toggleTaskThunk',
-   async({task, navigate}, thunkAPI) => {
+export const editTaskThunk = createAsyncThunk(
+   'tasks/editTaskThunk',
+   async ({id, navigate}, thunkAPI) => {
       const state = thunkAPI.getState();
       const token = state.auth.token;
       if (!token) return navigate('/login'); 
       const {rejectWithValue} = thunkAPI;
       try {
-         const url = server + '/task/' + task.id;
-         const response = await axios.put(url, {
-            ...task
-         }, {
+         const url = server + '/task/' + id;
+         const response = await axios.get(url, {
             headers: {
                'Authorization': `Bearer ${token}`
             }

@@ -18,12 +18,15 @@ import { User } from './pages/admin/User';
 import { Task } from './pages/private/Task';
 import { ActiveUsers } from './pages/admin/ActiveUsers';
 import { BlockedUsers } from './pages/admin/BlockedUsers';
+import withClearError from './HOC/withClearError';
+
+const RoutesWithClearError = withClearError(Routes);
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
+        <RoutesWithClearError>
           <Route path="/" element={<PublicLayout />}>
               <Route index element={<Home />} />
               <Route path="/register" element={<Register />} />
@@ -47,7 +50,7 @@ function App() {
             <Route path="/user/:id" element={<User />} />
           </Route>
           
-        </Routes>
+        </RoutesWithClearError>
       </BrowserRouter>
     </Provider>
   );

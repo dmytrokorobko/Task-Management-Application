@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const db = require('./database');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { authenticateToken, getUserId } = require('./middleware');
+const { authenticateToken, getUserId, isAdminRole } = require('./middleware');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -47,6 +47,7 @@ app.post('/login', (req, res) => {
       if (row) {
          const match = await bcrypt.compare(password, row.password);
          if (match) {
+            if (row.blocked === 1) return res.status(400).send({message: 'User has been blocked'});
             const token = jwt.sign({username: username}, secretKey, {expiresIn: '60m'});
             res.status(200).send({token, role: row.role});
          } else return res.status(400).send({message: 'Invalid password'});
@@ -65,7 +66,7 @@ app.get('/tasks', authenticateToken, getUserId, (req, res) => {
       if (err) return res.status(500).send({message: 'Error getting tasks: ' + err.message});
       if (rows && rows.length > 0) {         
          res.status(200).send({tasks: rows});
-      } else return res.status(404).send({message: 'Not found any task for current user'});
+      } else return res.status(200).send({message: 'Not found any task for current user'});
    });
 });
 
@@ -87,7 +88,7 @@ app.post('/newtask', authenticateToken, getUserId, (req, res) => {
 app.get('/task/:id', authenticateToken, getUserId, (req, res) => {   
    const { id } = req.params;   
    const taskQuery = db.prepare('SELECT * FROM tasks WHERE user_id=? AND id=?');
-   taskQuery.get(userRow.id, id, async (err, taskRow) => {
+   taskQuery.get(req.userId, id, async (err, taskRow) => {
       taskQuery.finalize();
       if (err) return res.status(500).send({message: 'Error getting task: ' + err.message});
       if (taskRow) {
@@ -120,6 +121,52 @@ app.delete('/task/:id', authenticateToken, getUserId, (req, res) => {
       if (err) return res.status(500).send({message: 'Operation failed: ' + err.message});
       res.status(200).send({message: 'Task was deleted successfully'});
    });
+});
+
+//==========================================================
+
+//users
+//get all users
+app.get('/users', authenticateToken, getUserId, isAdminRole, (req, res) => {
+   const usersQuery = db.prepare('SELECT * FROM users');
+   usersQuery.all((err, rows) => {
+      usersQuery.finalize();
+      if (err) return res.status(500).send({message: 'Error getting users: ' + err.message});
+      if (rows && rows.length > 0) {         
+         res.status(200).send({users: rows});
+      } else return res.status(200).send({message: 'Not found any user in database'});
+   });
+});
+
+//get data for selected user
+app.get('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {   
+   const { id } = req.params;   
+   const userQuery = db.prepare('SELECT * FROM users WHERE id=?');
+   userQuery.get(id, async (err, userRow) => {
+      userQuery.finalize();
+      if (err) return res.status(500).send({message: 'Error getting user: ' + err.message});
+      if (userRow) {
+         res.status(200).send({user: userRow});
+      } else return res.status(400).send({message: 'User not found'});
+   });
+});
+
+//update selected user
+app.put('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {      
+   const { id } = req.params;   
+   const {username, role, blocked} = req.body;   
+   if (!username || !role || !blocked === undefined) {
+      return res.status(400).send({ message: 'Server didn\'t received all data' });
+   }
+   if (username === 'admin' && role === 'admin') {
+      return res.status(500).send({message: 'You can\'t modify super user'});
+   }
+   const updateUser = db.prepare('UPDATE users SET role=?, blocked=? WHERE id=? AND username=?');
+   updateUser.run(role, blocked, id, username, function (err) {
+      updateUser.finalize();
+      if (err) return res.status(500).send({message: 'Operation failed: ' + err.message});
+      res.status(200).send({message: 'User updated successfully'});
+   });   
 });
 
 //================================================================

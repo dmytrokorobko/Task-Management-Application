@@ -27,4 +27,15 @@ const getUserId = (req, res, next) => {
    });
 };
 
-module.exports = { authenticateToken, getUserId };
+const isAdminRole = (req, res, next) => {
+   const userRoleQuery = db.prepare('SELECT role FROM users WHERE username=? AND id=?');
+   userRoleQuery.get(req.user.username, req.userId, (err, userRow) => {
+      userRoleQuery.finalize();
+      if (err) return res.status(500).send({message: 'Error checking user: ' + err.message});
+      if (!userRow) return res.status(404).send({message: 'User role not found'});
+      req.userRole = userRow.role;
+      next();
+   });
+}
+
+module.exports = { authenticateToken, getUserId, isAdminRole };

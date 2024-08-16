@@ -2,3 +2,202 @@ header .admin {
    display: flex;
    flex-direction: column;
 }
+
+.header nav ul li a.new-task {
+   background-color: #0075F2;
+   border: 1px solid #0075F2;
+}
+
+.header nav ul li a.new-task:hover {
+   background-color: #0075F2;
+   border: 1px solid #0075F2;
+   color: #D3D5D7;
+}
+
+.header nav ul li a.new-task.active {
+   background-color: #76B041;
+   color: #D3D5D7;
+}
+
+.header nav ul li a.new-task.active:hover {
+   background-color: #0075F2;
+   color: #D3D5D7;
+}
+
+.form.task div input, .form.task .textarea {
+   width: 600px;
+   max-width: 100%;
+   min-width: 100px;
+   box-sizing: border-box;
+   padding: 10px;
+}
+
+.form.task .textarea {
+   width: 600px;
+   max-width: 600px;
+   min-width: 100px;
+   resize: vertical;
+   font-family: 'Heebo', sans-serif;  
+   font-size: 16px;
+}
+
+.form.task form div div label {  
+   text-align: left;
+}
+
+.react-datepicker__header {
+   background-color: #007bff; /* Primary color of your app */
+   color: white;
+}
+
+.react-datepicker__day--selected {
+   background-color: #007bff;
+   color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+   background-color: #0056b3;
+   color: white;
+}
+
+.react-datepicker {
+   width: 440px;
+   border: 1px solid #ddd;
+   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.react-datepicker__day-names {
+   margin-top: 15px;
+}
+
+.react-datepicker__month {
+   width: 300px;   
+}
+
+.react-datepicker__header {
+   padding: 10px;
+}
+
+.react-datepicker__header__dropdown--scroll {
+   margin: 10px 0;
+}
+
+.weekend-day {
+   color: red;
+}
+
+.react-datepicker__month-container {
+   float: left;
+   width: 315px;   
+   padding: 10px 0 10px 10px;
+}
+
+.react-datepicker__navigation--previous {
+   left: 10px;
+   top: 35px;
+}
+
+.react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {
+   right: 115px;
+   top: 35px;
+}
+
+.react-datepicker__time-container {
+   margin: 10px 0;
+}
+
+.tasks-list {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+.tasks-list li {
+   border-bottom: 1px solid #D3D5D755;
+}
+
+.tasks-list li:last-child {
+   border-bottom: none;
+}
+
+.task-item div {
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   gap: 10px;
+   align-items: center;   
+}
+
+.task-item div p:nth-child(1) {
+   width: 200px;
+   text-align: left;
+}
+
+.task-item div p:nth-child(2) {
+   flex-grow: 1;
+}
+
+.task-item div p:nth-child(3) {
+   width: 175px;
+}
+
+.task-item div .task-completed {
+   display: flex;
+   align-items: center;
+}
+
+.task-item div .task-completed input {
+   width: 20px;
+   height: 20px;
+}
+
+.task-item div .task-buttons {
+   display: flex;
+   gap: 10px;
+}
+
+.task-item div .task-buttons button {
+   padding: 5px 10px;
+   cursor: pointer;
+}
+
+.task-item div .task-buttons button.task-button-edit {
+   background-color: #76B041;
+}
+
+.task-item div .task-buttons button.task-button-delete {
+   background-color: #E4572E;
+}
+
+.task-item p.server-error,
+.task-item p.server-loading {
+   margin: 0 0 10px;
+}
+
+form .user-role {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+}
+
+form .user-role select {
+   flex-grow: 1;
+   padding: 10px;
+}
+
+.form.task form div .user-blocked {
+   display: flex;
+}
+
+.form.task form div .user-blocked input {
+   width: 20px;
+   min-width: 0;
+   height: 20px;
+   flex-grow: 0;
+   margin: 0;
+}
+
+.server-loading {
+   color: #0075F2;
+}
+
