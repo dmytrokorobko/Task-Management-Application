@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Task Management Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This Task Management Application is a full-stack project that provides functionalities for users to manage their tasks and, for administrators, to manage users. The application is divided into two main components:
 
-In the project directory, you can run:
+- **Backend:** A Node.js server using Express and SQLite for database management. It handles user authentication, task management, and user management with roles and permissions.
+- **Frontend:** A React-based application using Redux for state management. It includes different layouts for guests, authorized users, and administrators, offering distinct functionalities and views.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Backend
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **SQLite Database:** The backend uses SQLite to store user and task data. It initializes the database on startup, ensuring that required tables are created.
+- **User Authentication:** Users can register and log in, with JWT tokens used for authentication. The application checks user roles and permissions for protected routes.
+- **Task Management:** Users can create, update, delete, and view tasks associated with their accounts.
+- **Admin Management:** Administrators can manage users, including viewing all users, updating user roles, and blocking users.
+- **Middleware:** Custom middleware is used to authenticate tokens, extract user IDs, and check user roles.
 
-### `npm test`
+### Frontend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React & Redux:** The frontend is built using React for the UI and Redux for managing global state, including authentication, tasks, and user data.
+- **Formik & Yup:** Form handling and validation are managed with Formik and Yup, providing a robust and user-friendly form experience.
+- **Routing:** The app uses React Router for navigation, with protected routes ensuring that only authorized users and administrators can access specific pages.
+- **Layouts:** There are three distinct layouts:
+  - **PublicLayout:** For guests and visitors.
+  - **PrivateLayout:** For authenticated users.
+  - **AdminLayout:** For administrators, with additional management capabilities.
+- **Responsive Design:** The application uses Flexbox and other CSS techniques to ensure a responsive and user-friendly design.
 
-### `npm run build`
+## Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **backend/database.js**: Manages the SQLite database, including initialization and user setup.
+- **backend/middleware.js**: Contains middleware for authentication and role checking.
+- **backend/server.js**: Main entry point for the backend server, handling routes and server setup.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Frontend
+- **frontend/src/store**: Contains Redux slices for managing authentication, tasks, and users.
+- **frontend/src/pages**: Different pages for public, private, and admin views.
+- **frontend/src/components**: Reusable components, including forms and task items.
+- **frontend/src/layouts**: Layout components for public, private, and admin views.
+- **frontend/src/routes**: Contains routing logic, including protected routes.
 
-### `npm run eject`
+## API Endpoints
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Authentication
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **POST /register**: Register a new user.
+- **POST /login**: Log in a user and receive a JWT token.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Task Management
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **GET /tasks**: Get all tasks for the authenticated user.
+- **POST /newtask**: Create a new task.
+- **GET /task/:id**: Get details of a specific task.
+- **PUT /task/:id**: Update a specific task.
+- **DELETE /task/:id**: Delete a specific task.
 
-## Learn More
+### User Management (Admin Only)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **GET /users**: Get a list of all users.
+- **GET /user/:id**: Get details of a specific user.
+- **PUT /user/:id**: Update a specific user.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Contributing
 
-### Code Splitting
+Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### License
 
-### Analyzing the Bundle Size
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Acknowledgements
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thanks to the creators of React, Redux, Formik, Yup, and Express for their excellent tools.
+Special thanks to SQLite for providing a lightweight and easy-to-use database.
