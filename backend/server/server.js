@@ -15,6 +15,7 @@ const secretKey = process.env.SECRET_KEY;
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/todo/api', (req, res, next) => {
+   console.log("Middleware for /todo/api hit");
    next();
 });
 
