@@ -14,6 +14,9 @@ const secretKey = process.env.SECRET_KEY;
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/api', (req, res, next) => {
+   next();
+});
 
 //authentification
 //register new user
