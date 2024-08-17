@@ -1,7 +1,7 @@
 const { start } = require("./server");
 const shutdown = require("./shutdown");
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 const server = start(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
