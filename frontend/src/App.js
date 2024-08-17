@@ -25,7 +25,7 @@ const RoutesWithClearError = withClearError(Routes);
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename='/todo'>
         <RoutesWithClearError>
           <Route path="/" element={<PublicLayout />}>
               <Route index element={<Home />} />
