@@ -32,7 +32,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />  
               <Route path="/logout" element={<Logout />} />            
-              <Route path="*" element={<Page404 />} />
+              <Route path="*" element={<Page404 />} />              
           </Route>
 
           <Route element={<PrivateRoute allowedRoles={['user', 'admin']} />}>

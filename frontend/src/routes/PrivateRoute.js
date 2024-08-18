@@ -16,8 +16,7 @@ const PrivateRoute = ({allowedRoles}) => {
 
    return (
       <>         
-         {role === 'admin' ? <AdminLayout /> : <PrivateLayout />}
-         <Outlet />
+         {role === 'admin' ? <AdminLayout /> : <PrivateLayout />}         
       </>
    )
 }
