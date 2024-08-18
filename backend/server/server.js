@@ -14,19 +14,17 @@ const secretKey = process.env.SECRET_KEY;
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/todo/api', (req, res, next) => {
-   console.log("Middleware for /todo/api hit");
+
+//path /todo/api
+const apiRouter = express.Router();
+apiRouter.use((req, res, next) => {   
    next();
 });
-
-//test
-app.get('/todo/api/test', (req, res) => {
-   return res.status(200).send('I am working');
-});
+app.use('/todo/api', apiRouter);
 
 //authentification
 //register new user
-app.post('/register', (req, res) => {
+apiRouter.post('/register', (req, res) => {
    const {username, password} = req.body;
    if (!username || !password) return res.status(500).send({message: 'Username and password are required'});  
    const checkUser = db.prepare('SELECT * FROM users WHERE username=?');
@@ -47,7 +45,7 @@ app.post('/register', (req, res) => {
 });
 
 //login
-app.post('/login', (req, res) => {
+apiRouter.post('/login', (req, res) => {
    const {username, password} = req.body;
    const checkUser = db.prepare('SELECT * FROM users WHERE username=?');
    checkUser.get(username, async (err, row) => {
@@ -68,7 +66,7 @@ app.post('/login', (req, res) => {
 
 //tasks
 //get tasks for current user
-app.get('/tasks', authenticateToken, getUserId, (req, res) => {
+apiRouter.get('/tasks', authenticateToken, getUserId, (req, res) => {
    const tasksQuery = db.prepare('SELECT * FROM tasks WHERE user_id=?');
    tasksQuery.all(req.userId, (err, rows) => {
       tasksQuery.finalize();
@@ -80,7 +78,7 @@ app.get('/tasks', authenticateToken, getUserId, (req, res) => {
 });
 
 //create new task for current user
-app.post('/newtask', authenticateToken, getUserId, (req, res) => {
+apiRouter.post('/newtask', authenticateToken, getUserId, (req, res) => {
    const {title, description, expiration} = req.body;
    console.log('Title: ' + title);
    console.log('UserId: ' + req.userId);
@@ -94,7 +92,7 @@ app.post('/newtask', authenticateToken, getUserId, (req, res) => {
 });
 
 //get data for selected task for current user
-app.get('/task/:id', authenticateToken, getUserId, (req, res) => {   
+apiRouter.get('/task/:id', authenticateToken, getUserId, (req, res) => {   
    const { id } = req.params;   
    const taskQuery = db.prepare('SELECT * FROM tasks WHERE user_id=? AND id=?');
    taskQuery.get(req.userId, id, async (err, taskRow) => {
@@ -107,7 +105,7 @@ app.get('/task/:id', authenticateToken, getUserId, (req, res) => {
 });
 
 //update selected task for current user
-app.put('/task/:id', authenticateToken, getUserId, (req, res) => {      
+apiRouter.put('/task/:id', authenticateToken, getUserId, (req, res) => {      
    const { id } = req.params;   
    const {title, description, expiration, completed} = req.body;   
    if (!title || !description || !expiration || completed === undefined) {
@@ -122,7 +120,7 @@ app.put('/task/:id', authenticateToken, getUserId, (req, res) => {
 });
 
 //delete selected task for current user
-app.delete('/task/:id', authenticateToken, getUserId, (req, res) => {   
+apiRouter.delete('/task/:id', authenticateToken, getUserId, (req, res) => {   
    const { id } = req.params;   
    const deleteTask = db.prepare('DELETE FROM tasks WHERE id=? AND user_id=?');
    deleteTask.run(id, req.userId, function (err) {
@@ -136,7 +134,7 @@ app.delete('/task/:id', authenticateToken, getUserId, (req, res) => {
 
 //users
 //get all users
-app.get('/users', authenticateToken, getUserId, isAdminRole, (req, res) => {
+apiRouter.get('/users', authenticateToken, getUserId, isAdminRole, (req, res) => {
    const usersQuery = db.prepare('SELECT * FROM users');
    usersQuery.all((err, rows) => {
       usersQuery.finalize();
@@ -148,7 +146,7 @@ app.get('/users', authenticateToken, getUserId, isAdminRole, (req, res) => {
 });
 
 //get data for selected user
-app.get('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {   
+apiRouter.get('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {   
    const { id } = req.params;   
    const userQuery = db.prepare('SELECT * FROM users WHERE id=?');
    userQuery.get(id, async (err, userRow) => {
@@ -161,7 +159,7 @@ app.get('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {
 });
 
 //update selected user
-app.put('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {      
+apiRouter.put('/user/:id', authenticateToken, getUserId, isAdminRole, (req, res) => {      
    const { id } = req.params;   
    const {username, role, blocked} = req.body;   
    if (!username || !role || !blocked === undefined) {
