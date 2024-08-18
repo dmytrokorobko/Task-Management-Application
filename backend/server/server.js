@@ -19,6 +19,11 @@ app.use('/todo/api', (req, res, next) => {
    next();
 });
 
+//test
+app.get('/test', (res) => {
+   return res.status(200).send('I am working');
+});
+
 //authentification
 //register new user
 app.post('/register', (req, res) => {
