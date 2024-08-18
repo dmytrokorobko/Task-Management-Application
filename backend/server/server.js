@@ -20,7 +20,7 @@ app.use('/todo/api', (req, res, next) => {
 });
 
 //test
-app.get('/test', (res) => {
+app.get('/todo/api/test', (req, res) => {
    return res.status(200).send('I am working');
 });
 
